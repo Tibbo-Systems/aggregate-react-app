@@ -6,7 +6,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.5",
-    "tibbo-aggregate": "git+https://github.com/Tibbo-Systems/aggregate-javascript-sdk.git"
+    "tibbo-aggregate": "file:../aggregate-javascript-sdk"
   },
   "scripts": {
     "start": "react-scripts start",

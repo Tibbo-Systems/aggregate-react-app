@@ -17,13 +17,7 @@ class App extends Component {
       .rec()
       .getValueByName("value")
       .then(result => {
-        result
-          .rec()
-          .getValueByName("timestamp")
-          .then(re => {
-            console.log("REAL TIME: " + new Date());
-            console.log("TIMESTAMP from update: " + re);
-          });
+        console.log(result.rec());
       });
   };
 
