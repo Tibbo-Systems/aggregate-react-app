@@ -5,23 +5,22 @@ import DefaultContextEventListener from "../node_modules/tibbo-aggregate/src/com
 import Server from "./AggreGateService";
 
 class App extends Component {
+
   constructor(props) {
     super(props);
-    this.at = new Server();
-    this.context = null;
+    this.state = {
+      event: String,
+    };
   }
 
   handle = async event => {
-    event
-      .getData()
-      .rec()
-      .getValueByName("value")
-      .then(result => {
-        console.log(result.rec());
-      });
+    let r = await event.getData().rec().getValueByName("value");
+    let res = await r.dataAsString(true,false,false);
+    this.setState({event:res});
   };
 
   async componentDidMount() {
+    this.at = new Server();
     await this.at.setUp();
     this.context = await this.at.getContext("users.admin.devices.virtual");
     const statusChangeListener = new DefaultContextEventListener();
@@ -36,13 +35,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      {this.state.event}
       </div>
     );
   }
