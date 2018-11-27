@@ -28,11 +28,6 @@ class App extends Component {
     const statusChangeListener = new DefaultContextEventListener();
     statusChangeListener.handle = this.handle;
     await this.context.addEventListener("updated", statusChangeListener);
-    const genericPropertiesDt = await this.context.getVariable( "genericProperties" );
-    // 315360000000 == 10 year
-    await genericPropertiesDt.rec().setValueByName( "syncPeriod", 315360000000 );
-    await genericPropertiesDt.rec().setValueByName( "cache", 1 );
-    await this.context.setVariableByNameAndDataTable( "genericProperties", genericPropertiesDt );
   }
 
   async componentWillUnmount() {
