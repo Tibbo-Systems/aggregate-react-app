@@ -1,8 +1,7 @@
-import { COMMANDS_CLIENT } from "./../node_modules/tibbo-aggregate/src/common/util/Logger";
-import RemoteServer from "./../node_modules/tibbo-aggregate/src/common/protocol/RemoteServer";
-import { DEFAULT_WS_PORT } from "./../node_modules/tibbo-aggregate/src/common/protocol/RemoteServerConstants";
-import ObjectUtils from "./../node_modules/tibbo-aggregate/src/common/util/ObjectUtils";
-import RemoteServerController from "./../node_modules/tibbo-aggregate/src/common/protocol/RemoteServerContoller";
+import { COMMANDS_CLIENT } from "aggregate-api";
+import { RemoteServer, RemoteServerContoller } from "aggregate-api";
+import { DEFAULT_WS_PORT } from "aggregate-api";
+import { ObjectUtils } from "aggregate-api";
 
 export const USERNAME = "admin";
 
@@ -14,12 +13,12 @@ export default class Server {
   async setUp(path) {
     const rls = new RemoteServer(
       "localhost",
-      DEFAULT_WS_PORT,
+      8080,
       USERNAME,
       "admin",
       path
     );
-    this.rlc = new RemoteServerController(rls, true, true, COMMANDS_CLIENT);
+    this.rlc = new RemoteServerContoller(rls, true, true, COMMANDS_CLIENT);
     await this.rlc.connect();
     await this.rlc.login();
   }

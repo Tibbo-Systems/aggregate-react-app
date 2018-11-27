@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import DefaultContextEventListener from "../node_modules/tibbo-aggregate/src/common/context/DefaultContextEventListener";
+import { DefaultContextEventListener } from "aggregate-api";
 import Server from "./AggreGateService";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      event: String,
+      event: String
     };
   }
 
   handle = async event => {
-    let r = await event.getData().rec().getValueByName("value");
-    let res = await r.dataAsString(true,false,false);
-    this.setState({event:res});
+    let r = await event
+      .getData()
+      .rec()
+      .getValueByName("value");
+    let res = await r.dataAsString(true, false, false);
+    this.setState({ event: res });
   };
 
   async componentDidMount() {
@@ -26,6 +28,11 @@ class App extends Component {
     const statusChangeListener = new DefaultContextEventListener();
     statusChangeListener.handle = this.handle;
     await this.context.addEventListener("updated", statusChangeListener);
+    const genericPropertiesDt = await this.context.getVariable( "genericProperties" );
+    // 315360000000 == 10 year
+    await genericPropertiesDt.rec().setValueByName( "syncPeriod", 315360000000 );
+    await genericPropertiesDt.rec().setValueByName( "cache", 1 );
+    await this.context.setVariableByNameAndDataTable( "genericProperties", genericPropertiesDt );
   }
 
   async componentWillUnmount() {
@@ -33,11 +40,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-      {this.state.event}
-      </div>
-    );
+    return <div className="App">{this.state.event}</div>;
   }
 }
 
