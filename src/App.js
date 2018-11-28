@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { DefaultContextEventListener } from "aggregate-api";
 import Server from "./AggreGateService";
+
+const CONTEXT = "users.admin.devices.virtual";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: String
+      event: "",
+      normalVariable: "",
+      newNormalVariable: ""
     };
   }
 
@@ -18,16 +21,17 @@ class App extends Component {
       .rec()
       .getValueByName("value");
     let res = await r.dataAsString(true, false, false);
+    console.log(res);
     this.setState({ event: res });
   };
 
   async componentDidMount() {
     this.at = new Server();
     await this.at.setUp();
-    this.context = await this.at.getContext("users.admin.devices.virtual");
+    this.virtualContext = await this.at.getContext(CONTEXT);
     const statusChangeListener = new DefaultContextEventListener();
     statusChangeListener.handle = this.handle;
-    await this.context.addEventListener("updated", statusChangeListener);
+    await this.virtualContext.addEventListener("updated", statusChangeListener);
   }
 
   async componentWillUnmount() {
@@ -35,8 +39,45 @@ class App extends Component {
   }
 
   render() {
-    return <div className="App">{this.state.event}</div>;
+    return (
+      <div className="App">
+        <h3>Event from context '{CONTEXT}'</h3>
+        {this.state.event}
+        <h3>Get variable 'normal' from context '{CONTEXT}'</h3>
+        <button onClick={this.handleOnClickGet}>Get variable</button>
+        <input value={this.state.normalVariable} />
+        <h3>Set variable 'normal' to context '{CONTEXT}'</h3>
+        <button onClick={this.handleOnClickSet}>Set variable</button>
+        <input onChange={this.handle} />
+      </div>
+    );
   }
+
+  handle = async e => {
+    this.setState({
+      newNormalVariable: e.target.value
+    });
+  };
+
+  handleOnClickSet = async () => {
+    const dataTable = await this.virtualContext.getVariable("normal");
+    await dataTable
+      .rec()
+      .setValueByName("string", this.state.newNormalVariable);
+    await this.virtualContext.setVariableByNameAndDataTable(
+      "normal",
+      dataTable
+    );
+  };
+
+  handleOnClickGet = async () => {
+    const dataTable = await this.virtualContext.getVariable("normal");
+    const res = await dataTable.rec().getValueByName("string");
+    console.log(res);
+    this.setState({
+      normalVariable: res
+    });
+  };
 }
 
 export default App;
