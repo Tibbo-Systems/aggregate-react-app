@@ -15,13 +15,12 @@ class App extends Component {
     };
   }
 
-  handle = async event => {
+  handleEvent = async event => {
     let r = await event
       .getData()
       .rec()
       .getValueByName("value");
     let res = await r.dataAsString(true, false, false);
-    console.log(res);
     this.setState({ event: res });
   };
 
@@ -30,7 +29,7 @@ class App extends Component {
     await this.at.setUp();
     this.virtualContext = await this.at.getContext(CONTEXT);
     const statusChangeListener = new DefaultContextEventListener();
-    statusChangeListener.handle = this.handle;
+    statusChangeListener.handle = this.handleEvent;
     await this.virtualContext.addEventListener("updated", statusChangeListener);
   }
 
@@ -48,12 +47,12 @@ class App extends Component {
         <input value={this.state.normalVariable} />
         <h3>Set variable 'normal' to context '{CONTEXT}'</h3>
         <button onClick={this.handleOnClickSet}>Set variable</button>
-        <input onChange={this.handle} />
+        <input onChange={this.handleInput} />
       </div>
     );
   }
 
-  handle = async e => {
+  handleInput = async e => {
     this.setState({
       newNormalVariable: e.target.value
     });
