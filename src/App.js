@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { DefaultContextEventListener } from "aggregate-api";
+import { DefaultContextEventListener } from "aggregate-sdk";
 import Server from "./AggreGateService";
 
 const CONTEXT = "users.admin.devices.virtual";

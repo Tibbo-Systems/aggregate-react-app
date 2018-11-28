@@ -1,7 +1,7 @@
-import { COMMANDS_CLIENT } from "aggregate-api";
-import { RemoteServer, RemoteServerController } from "aggregate-api";
-import { DEFAULT_WS_PORT } from "aggregate-api";
-import { ObjectUtils } from "aggregate-api";
+import { COMMANDS_CLIENT } from "aggregate-sdk";
+import { RemoteServer, RemoteServerController } from "aggregate-sdk";
+import { DEFAULT_WS_PORT } from "aggregate-sdk";
+import { ObjectUtils } from "aggregate-sdk";
 
 export const USERNAME = "admin";
 
@@ -11,13 +11,7 @@ export default class Server {
   }
 
   async setUp(path) {
-    const rls = new RemoteServer(
-      "localhost",
-      8080,
-      USERNAME,
-      "admin",
-      path
-    );
+    const rls = new RemoteServer("localhost", 8080, USERNAME, "admin", path);
     this.rlc = new RemoteServerController(rls, true, true, COMMANDS_CLIENT);
     await this.rlc.connect();
     await this.rlc.login();

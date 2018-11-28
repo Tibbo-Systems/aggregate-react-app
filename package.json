@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "aggregate-api": "file:E:/js-api",
+    "aggregate-sdk": "^5.61.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.5"
