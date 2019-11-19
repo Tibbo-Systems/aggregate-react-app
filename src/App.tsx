@@ -27,7 +27,7 @@ class App extends React.Component<IProps, IState> {
         const root = this.server.getContextManager().getRoot();
         if (root) {
             await root.loadContext();
-            let v = await root.getVariable("version", null, null);
+            let v = await root.getVariable("version");
             this.setState({version: v.rec().getValue("version")});
         }
 
