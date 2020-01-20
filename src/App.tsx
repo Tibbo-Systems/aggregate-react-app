@@ -1,7 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {RemoteServer, RemoteServerController} from "aggregate-sdk";
+import {
+    RemoteServer,
+    RemoteServerController,
+} from "aggregate-sdk";
 
 interface IProps {
 }
