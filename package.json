@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "^24.9.0",
-    "@types/node": "^12.12.25",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
-    "aggregate-sdk": "^5.70.16-dev.20200120-2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.28",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
+    "aggregate-sdk": "^5.70.16-dev.20200226",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-scripts": "3.2.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   },
   "scripts": {
     "start": "react-scripts start",
